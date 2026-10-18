@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0b1220">
+    <meta name="description"
+          content="Pneumonia Detection System — an educational AI project for chest X-ray image analysis.">
+
+    <title>{% block title %}PneumoAI | X-Ray Analysis{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <a href="{{ url_for('main.home') }}" class="brand">
+                <span class="brand-icon">✚</span>
+                <span class="brand-name">
+                    Pneumo<span>AI</span>
+                    <small>INTELLIGENCE PLATFORM</small>
+                </span>
+            </a>
+
+            <div class="sidebar-label">WORKSPACE</div>
+
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('main.home') }}"
+                   class="nav-link {% if request.endpoint == 'main.home' %}active{% endif %}">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{{ url_for('main.home') }}#upload-section"
+                   class="nav-link">
+                    <span class="nav-icon">↥</span>
+                    <span>X-Ray Analysis</span>
+                </a>
+
+                <a href="{{ url_for('main.about') }}"
+                   class="nav-link">
+                    <span class="nav-icon">ⓘ</span>
+                    <span>About Project</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <strong>System Workspace</strong>
+                        <small>Educational Demo</small>
+                    </div>
+                </div>
+
+                <p class="sidebar-note">
+                    AI-assisted chest X-ray classification for academic use.
+                </p>
+            </div>
+        </aside>
+
+        <!-- Main Area -->
+        <div class="main-area">
+
+            <!-- Top Navbar -->
+            <header class="topbar">
+                <button class="menu-toggle"
+                        id="menu-toggle"
+                        type="button"
+                        aria-label="Toggle navigation"
+                        aria-controls="sidebar"
+                        aria-expanded="false">
+                    ☰
+                </button>
+
+                <div class="breadcrumb">
+                    <span>Workspace</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <strong>{% block page_name %}Dashboard{% endblock %}</strong>
+                </div>
+
+                <div class="topbar-right">
+                    <span class="environment-badge">
+                        <span class="status-dot"></span>
+                        PROJECT DEMO
+                    </span>
+
+                    <div class="profile-avatar" aria-label="Project user">
+                        P
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main class="page-content">
+                {% block content %}{% endblock %}
+            </main>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <span>© 2026 PneumoAI · Academic Project</span>
+                <span>Built for educational purposes</span>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main JavaScript -->
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

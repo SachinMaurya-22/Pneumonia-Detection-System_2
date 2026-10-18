@@ -1,0 +1,250 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | PneumoAI{% endblock %}
+{% block page_name %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="welcome-section">
+    <div class="welcome-copy">
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            AI-POWERED ACADEMIC PROJECT
+        </div>
+
+        <h1>Chest X-Ray <span>Analysis</span></h1>
+
+        <p class="welcome-description">
+            Upload a chest X-ray image to explore AI-assisted image
+            classification in a clean and simple workspace.
+        </p>
+    </div>
+
+    <div class="welcome-decoration" aria-hidden="true">
+        <div class="decoration-ring ring-one"></div>
+        <div class="decoration-ring ring-two"></div>
+        <div class="decoration-cross">✚</div>
+    </div>
+</section>
+
+
+<!-- Information Cards -->
+<section class="overview-grid" aria-label="Project overview">
+
+    <article class="overview-card">
+        <div class="overview-icon icon-teal">✚</div>
+        <div>
+            <p class="overview-label">PROJECT TYPE</p>
+            <h3>Medical AI</h3>
+            <span class="overview-caption">Educational demonstration</span>
+        </div>
+    </article>
+
+    <article class="overview-card">
+        <div class="overview-icon icon-blue">◎</div>
+        <div>
+            <p class="overview-label">INPUT FORMAT</p>
+            <h3>Chest X-Ray</h3>
+            <span class="overview-caption">JPG, JPEG and PNG</span>
+        </div>
+    </article>
+
+    <article class="overview-card">
+        <div class="overview-icon icon-purple">⌘</div>
+        <div>
+            <p class="overview-label">ANALYSIS MODE</p>
+            <h3>AI Classification</h3>
+            <span class="overview-caption">Trained model required</span>
+        </div>
+    </article>
+
+</section>
+
+
+<!-- Main Workspace -->
+<section class="analysis-layout" id="upload-section">
+
+    <div class="upload-panel">
+        <div class="panel-heading">
+            <div>
+                <span class="section-kicker">ANALYSIS WORKSPACE</span>
+                <h2>Upload X-Ray Image</h2>
+                <p>Select a chest X-ray image to begin.</p>
+            </div>
+
+            <span class="step-badge">STEP 01</span>
+        </div>
+
+        <form action="{{ url_for('main.predict') }}"
+              method="POST"
+              enctype="multipart/form-data"
+              id="upload-form">
+
+            <label for="xray-upload" class="upload-zone" id="upload-zone">
+
+                <div class="upload-icon-wrap">
+                    <svg viewBox="0 0 48 48"
+                         width="42"
+                         height="42"
+                         fill="none"
+                         aria-hidden="true">
+                        <path d="M24 31V8M15 17L24 8L33 17"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                        <path d="M10 29V36C10 38.2 11.8 40 14 40H34C36.2 40 38 38.2 38 36V29"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <h3>Drop your X-ray image here</h3>
+
+                <p>
+                    or <span class="browse-link">browse files</span>
+                    from your computer
+                </p>
+
+                <span class="upload-formats">
+                    JPG · JPEG · PNG &nbsp; | &nbsp; MAX 10 MB
+                </span>
+
+                <input type="file"
+                       name="xray"
+                       id="xray-upload"
+                       accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+                       hidden
+                       required>
+            </label>
+
+            <!-- Image Preview -->
+            <div class="preview-card" id="preview-card" hidden>
+                <div class="preview-image-wrap">
+                    <img src=""
+                         id="xray-preview"
+                         alt="Selected chest X-ray preview">
+                </div>
+
+                <div class="preview-details">
+                    <strong id="file-name">Selected image</strong>
+                    <span id="file-size">0 KB</span>
+                    <span class="file-ready">
+                        <span class="status-dot"></span>
+                        Image selected
+                    </span>
+                </div>
+
+                <button type="button"
+                        class="remove-image"
+                        id="remove-image"
+                        aria-label="Remove selected image">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Error / Status Message -->
+            <div class="form-message"
+                 id="form-message"
+                 role="alert"
+                 aria-live="polite"
+                 {% if not error %}hidden{% endif %}>
+                {{ error if error else "" }}
+            </div>
+
+            <div class="upload-actions">
+                <button type="button"
+                        class="button-secondary"
+                        id="clear-upload">
+                    Clear
+                </button>
+
+                <button type="submit"
+                        class="button-primary"
+                        id="analyze-button">
+                    <span>Analyze Image</span>
+                    <span class="button-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+
+        </form>
+
+        <div class="privacy-note">
+            <span aria-hidden="true">ⓘ</span>
+            <p>
+                Educational demonstration only. Do not upload identifiable
+                patient information. This tool does not provide a medical diagnosis.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Right Information Panel -->
+    <aside class="info-panel">
+
+        <div class="info-panel-header">
+            <span class="section-kicker">HOW IT WORKS</span>
+            <h2>Simple. Clear. Guided.</h2>
+            <p>Three steps to explore the image classification workflow.</p>
+        </div>
+
+        <div class="workflow-list">
+
+            <article class="workflow-item">
+                <div class="workflow-number">01</div>
+                <div>
+                    <h3>Upload Image</h3>
+                    <p>Choose a supported chest X-ray image from your device.</p>
+                </div>
+            </article>
+
+            <article class="workflow-item">
+                <div class="workflow-number">02</div>
+                <div>
+                    <h3>AI Processing</h3>
+                    <p>The trained model processes the image using its learned patterns.</p>
+                </div>
+            </article>
+
+            <article class="workflow-item">
+                <div class="workflow-number">03</div>
+                <div>
+                    <h3>View Prediction</h3>
+                    <p>Review the model output and its limitations.</p>
+                </div>
+            </article>
+
+        </div>
+
+        <div class="model-notice">
+            <div class="notice-icon">✳</div>
+            <div>
+                <strong>Model information</strong>
+                <p>
+                    Prediction becomes available after the trained model
+                    is connected and tested.
+                </p>
+            </div>
+        </div>
+
+    </aside>
+
+</section>
+
+
+<!-- Disclaimer -->
+<section class="disclaimer-banner">
+    <div class="disclaimer-symbol">!</div>
+    <div>
+        <strong>Important Medical Notice</strong>
+        <p>
+            This student project is intended for educational and research
+            demonstration only. Predictions may be incorrect and must not
+            be used to diagnose or treat a medical condition.
+        </p>
+    </div>
+</section>
+
+{% endblock %}
